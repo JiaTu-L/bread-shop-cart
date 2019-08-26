@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.breadStore.mappers.UserMapper">
+  <resultMap id="BaseResultMap" type="com.qf.breadStore.domain.entity.User">
+    <id column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="isadmin" jdbcType="BOOLEAN" property="isadmin" />
+    <result column="isvalidate" jdbcType="BOOLEAN" property="isvalidate" />
+  </resultMap>
+  <resultMap id="base_user_resultMap" type="User">
+    <id property="uid" column="uid"/>
+    <result property="name" column="name"/>
+    <result property="address" column="address"/>
+    <result property="phone" column="phone"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    `uid`, username, email, `password`, `name`, phone, address, isadmin, isvalidate
+  </sql>
+</mapper>

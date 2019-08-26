@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.breadStore.mappers.ShopcarMapper">
+  <resultMap id="BaseResultMap" type="com.qf.breadStore.domain.entity.Shopcar">
+    <id column="car_id" jdbcType="INTEGER" property="carId" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="shop_id" jdbcType="INTEGER" property="shopId" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    car_id, `number`, shop_id, `uid`, `status`
+  </sql>
+  <resultMap id="user_shop_resultMap"
+             type="com.qf.breadStore.domain.vo.ShopCartVo">
+    <id property="carId" column="car_id"/>
+    <result property="number" column="number"/>
+    <result property="status" column="status"/>
+    <collection property="userList"
+                resultMap="com.qf.breadStore.mappers.UserMapper.base_user_resultMap"/>
+    <collection property="shopList"
+                resultMap="com.qf.breadStore.mappers.ShopMapper.shop_type_resultMap"/>
+  </resultMap>
+  <select id="findOrder" resultMap="user_shop_resultMap">
+    SELECT sc.car_id,sc.number,sc.status,
+    u.uid,u.name,u.phone,u.address,
+    s.shop_id,s.shop_name,s.price,s.image1,
+    t.type_name
+    FROM shopcar sc
+    LEFT JOIN user u ON sc.uid = u.uid
+    LEFT JOIN shop s ON sc.shop_id = s.shop_id
+    LEFT JOIN type t ON s.type_id = t.type_id
+  </select>
+  <insert id="insertCart">
+    INSERT
+  </insert>
+
+
+</mapper>

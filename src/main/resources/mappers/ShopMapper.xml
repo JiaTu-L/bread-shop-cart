@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.breadStore.mappers.ShopMapper">
+
+  <resultMap id="BaseResultMap" type="com.qf.breadStore.domain.entity.Shop">
+    <id column="shop_id" jdbcType="INTEGER" property="shopId" />
+    <result column="shop_name" jdbcType="VARCHAR" property="shopName" />
+    <result column="shop_image" jdbcType="VARCHAR" property="shopImage" />
+    <result column="detail_image" jdbcType="VARCHAR" property="detailImage" />
+    <result column="price" jdbcType="FLOAT" property="price" />
+    <result column="intro" jdbcType="VARCHAR" property="intro" />
+    <result column="stock" jdbcType="INTEGER" property="stock" />
+    <result column="type_id" jdbcType="INTEGER" property="typeId" />
+  </resultMap>
+  <resultMap id="shop_type_resultMap" type="com.qf.breadStore.domain.vo.ShopVo">
+    <id column="shop_id" property="shopId" />
+    <result column="shop_name" property="shopName" />
+    <result column="price" property="price" />
+    <result column="shop_image" property="shopImage" />
+    <result column="type_id" property="typeId" />
+    <collection property="typeList" resultMap="com.qf.breadStore.mappers.TypeMapper.base_type_resultMap" />
+  </resultMap>
+
+
+</mapper>
