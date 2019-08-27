@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qf.breadStore.mappers.ShopcarMapper">
-  <resultMap id="BaseResultMap" type="com.qf.breadStore.domain.entity.Shopcar">
+  <resultMap id="base_shopCart_resultMap" type="com.qf.breadStore.domain.entity.Shopcar">
     <id column="car_id" jdbcType="INTEGER" property="carId" />
     <result column="number" jdbcType="INTEGER" property="number" />
     <result column="shop_id" jdbcType="INTEGER" property="shopId" />
@@ -21,19 +21,39 @@
     <collection property="shopList"
                 resultMap="com.qf.breadStore.mappers.ShopMapper.shop_type_resultMap"/>
   </resultMap>
-  <select id="findOrder" resultMap="user_shop_resultMap">
+  <select id="findCartByUid" resultMap="user_shop_resultMap">
     SELECT sc.car_id,sc.number,sc.status,
-    u.uid,u.name,u.phone,u.address,
-    s.shop_id,s.shop_name,s.price,s.image1,
+    u.uid,u.username,u.phone,u.address,
+    s.shop_id,s.shop_name,s.price,s.shop_image,
     t.type_name
     FROM shopcar sc
     LEFT JOIN user u ON sc.uid = u.uid
     LEFT JOIN shop s ON sc.shop_id = s.shop_id
     LEFT JOIN type t ON s.type_id = t.type_id
+    WHERE u.uid = #{uid} AND status = 1
   </select>
-  <insert id="insertCart">
-    INSERT
+  <insert id="addCart">
+    INSERT INTO shopcar (uid,shop_id,number)
+    VALUES (#{uid},#{shop_id},#{number})
   </insert>
+  <update id="updateCartNum">
+    UPDATE shopcar
+    SET
+    <if test="ob!=null and ob==1">
+      number = number-1
+    </if>
+
+    <if test="ob != null and ob==2">
+      number = number+1
+    </if>
+    WHERE car_id = #{car_id}
+  </update>
+  <delete id="deletCar">
+    DELETE FROM shopcar WHERE car_id = #{car_id}
+  </delete>
+  <select id="findCartByUidShopId" resultMap="base_shopCart_resultMap">
+    SELECT sc.car_id FROM shopcar sc WHERE uid = #{uid} AND shop_id = #{shopId}
+  </select>
 
 
 </mapper>
